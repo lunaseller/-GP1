@@ -76,11 +76,14 @@
     <!-- End Meta Pixel Code -->
 </head>
 <body class="font-inter bg-light text-dark antialiased">
-    <!-- 悬浮联系按钮（您指定的按钮，添加了样式适配） -->
-    <button id="contactButton" class="fixed bottom-8 right-8 z-40 bg-whatsapp text-white px-6 py-3 rounded-full whatsapp-hover flex items-center gap-2 text-lg font-medium shadow-lg">
+    <!-- 悬浮联系按钮（改为a标签支持跳转） -->
+    <a id="contactButton" href="https://wa.me/85268814397?text=Hello%2C%20I%20would%20like%20to%20inquire%20about%20Canadian%20investment%20services." 
+       target="_blank" 
+       rel="noopener noreferrer"
+       class="fixed bottom-8 right-8 z-40 bg-whatsapp text-white px-6 py-3 rounded-full whatsapp-hover flex items-center gap-2 text-lg font-medium shadow-lg">
         <i class="fa fa-whatsapp text-xl"></i>
         <span>联系</span>
-    </button>
+    </a>
 
     <!-- Navigation Bar - Responsive Design with Mobile Collapsible Menu -->
     <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm shadow-sm">
@@ -300,7 +303,10 @@
                         </div>
                     </div>
 
-                    <a href="#" class="inline-block bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors font-medium">
+                    <a href="https://wa.me/85268814397?text=Hello%2C%20I%20would%20like%20to%20get%20the%20complete%20cryptocurrency%20guide." 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       class="inline-block bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors font-medium">
                         View Complete Cryptocurrency Guide <i class="fa fa-arrow-right ml-2"></i>
                     </a>
                 </div>
@@ -457,7 +463,10 @@
                         <li><a href="#" class="hover:text-white transition-colors">Investment Tutorials</a></li>
                         <li><a href="#" class="hover:text-white transition-colors">Market Analysis</a></li>
                         <li><a href="#" class="hover:text-white transition-colors">Frequently Asked Questions</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Contact Us</a></li>
+                        <li><a href="https://wa.me/85268814397?text=Hello%2C%20I%20would%20like%20to%20contact%20you." 
+                               target="_blank" 
+                               rel="noopener noreferrer"
+                               class="hover:text-white transition-colors">Contact Us</a></li>
                     </ul>
                 </div>
 
@@ -537,3 +546,38 @@
                         }
                     ]
                 },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
