@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canadian Invest Hub - 股票 & 加密货币投资平台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <!-- 配置Tailwind自定义主题，匹配目标网站现代简约风格 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36BFFA',
+                        dark: '#1E293B',
+                        light: '#F8FAFC',
+                        neutral: '#94A3B8',
+                        canadian: '#E81C27', // 加拿大国旗红色，增强本土辨识度
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(22, 93, 255, 0.1);
+            }
+        }
+    </style>
+    <!-- 引入Inter字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="font-inter bg-light text-dark antialiased">
+    <!-- 导航栏 - 响应式设计，移动端折叠菜单 -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm shadow-sm">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- 网站Logo -->
+                <div class="flex items-center">
+                    <a href="#" class="flex items-center gap-2">
+                        <i class="fa fa-line-chart text-primary text-2xl"></i>
+                        <span class="text-xl font-bold text-dark">Canadian <span class="text-primary">Invest Hub</span></span>
+                    </a>
+                </div>
+
+                <!-- 桌面端导航菜单 -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#stocks" class="text-dark hover:text-primary font-medium transition-colors">加拿大股票</a>
+                    <a href="#crypto" class="text-dark hover:text-primary font-medium transition-colors">加密货币</a>
+                    <a href="#tools" class="text-dark hover:text-primary font-medium transition-colors">投资工具</a>
+                    <a href="#tax" class="text-dark hover:text-primary font-medium transition-colors">加拿大税务</a>
+                </nav>
+
+                <!-- 登录/注册按钮 -->
+                <div class="hidden md:flex items-center gap-4">
+                    <a href="#" class="text-dark hover:text-primary font-medium">登录</a>
+                    <a href="#" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors">免费注册</a>
+                </div>
+
+                <!-- 移动端菜单按钮 -->
+                <div class="md:hidden">
+                    <button id="menuBtn" class="text-dark hover:text-primary">
+                        <i class="fa fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 移动端折叠菜单 (默认隐藏) -->
+        <div id="mobileMenu" class="md:hidden hidden bg-white border-t border-gray-100">
+            <div class="container mx-auto px-4 py-3 space-y-3">
+                <a href="#stocks" class="block py-2 text-dark hover:text-primary font-medium">加拿大股票</a>
+                <a href="#crypto" class="block py-2 text-dark hover:text-primary font-medium">加密货币</a>
+                <a href="#tools" class="block py-2 text-dark hover:text-primary font-medium">投资工具</a>
+                <a href="#tax" class="block py-2 text-dark hover:text-primary font-medium">加拿大税务</a>
+                <div class="flex gap-4 py-2">
+                    <a href="#" class="text-dark hover:text-primary font-medium">登录</a>
+                    <a href="#" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors">免费注册</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 英雄区 - 核心卖点展示 -->
+    <section class="bg-gradient-to-br from-primary/5 to-secondary/5 py-16 md:py-24">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2 text-center md:text-left">
+                    <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight text-shadow mb-6">
+                        加拿大<span class="text-primary">股票</span>与<span class="text-canadian">加密货币</span>
+                        <br>一站式投资平台
+                    </h1>
+                    <p class="text-neutral text-lg md:text-xl mb-8 max-w-lg mx-auto md:mx-0">
+                        专为加拿大投资者打造，提供多伦多证券交易所(TSX)股票行情、加密货币交易指引、税务优化方案，让你的投资更高效、更合规。
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <a href="#" class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors font-medium text-center">
+                            开始投资 <i class="fa fa-arrow-right ml-2"></i>
+                        </a>
+                        <a href="#" class="bg-white border border-gray-200 px-6 py-3 rounded-lg hover:bg-gray-50 transition-colors font-medium text-center">
+                            查看演示 <i class="fa fa-play-circle ml-2"></i>
+                        </a>
+                    </div>
+                    <div class="mt-8 flex items-center justify-center md:justify-start gap-6">
+                        <div class="flex items-center gap-2">
+                            <i class="fa fa-check-circle text-primary"></i>
+                            <span class="text-dark">TSX/TSXV 实时行情</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fa fa-check-circle text-primary"></i>
+                            <span class="text-dark">加拿大税务合规</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <div class="bg-white rounded-2xl shadow-lg p-6 card-hover">
+                        <h3 class="text-lg font-semibold mb-4">加拿大市场概览</h3>
+                        <canvas id="marketChart" width="400" height="250"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 加拿大股票模块 -->
+    <section id="stocks" class="py-16 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4">加拿大股票投资</h2>
+                <p class="text-neutral text-lg max-w-2xl mx-auto">聚焦多伦多证券交易所(TSX)核心标的，涵盖能源、金融、矿业等加拿大优势行业</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 股票卡片1 -->
+                <div class="bg-gray-50 rounded-xl p-6 shadow-sm card-hover">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-semibold text-xl">多伦多证券交易所(TSX)</h3>
+                        <span class="text-green-500 flex items-center">
+                            <i class="fa fa-arrow-up mr-1"></i> 0.87%
+                        </span>
+                    </div>
+                    <p class="text-neutral mb-6">加拿大最大证券交易所，拥有超过1,500家上市公司，总市值居全球前十</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500">^GSPTSE</span>
+                        <a href="#" class="text-primary hover:text-primary/80 font-medium">查看详情 <i class="fa fa-angle-right ml-1"></i></a>
+                    </div>
+                </div>
+
+                <!-- 股票卡片2 -->
+                <div class="bg-gray-50 rounded-xl p-6 shadow-sm card-hover">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-semibold text-xl">优势行业布局</h3>
+                        <span class="text-green-500 flex items-center">
+                            <i class="fa fa-check mr-1"></i> 热门
+                        </span>
+                    </div>
+                    <p class="text-neutral mb-6">能源（油砂、天然气）、金融（五大行）、矿业（黄金、锂）、电信等核心行业标的</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500">能源/金融/矿业</span>
+                        <a href="#" class="text-primary hover:text-primary/80 font-medium">查看标的 <i class="fa fa-angle-right ml-1"></i></a>
+                    </div>
+                </div>
+
+                <!-- 股票卡片3 -->
+                <div class="bg-gray-50 rounded-xl p-6 shadow-sm card-hover">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-semibold text-xl">TFSA/ RRSP 优化</h3>
+                        <span class="text-blue-500 flex items-center">
+                            <i class="fa fa-shield mr-1"></i> 合规
+                        </span>
+                    </div>
+                    <p class="text-neutral mb-6">利用加拿大免税储蓄账户(TFSA)和注册退休储蓄计划(RRSP)降低投资税负</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500">税务优化工具</span>
+                        <a href="#" class="text-primary hover:text-primary/80 font-medium">了解更多 <i class="fa fa-angle-right ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 加密货币模块 -->
+    <section id="crypto" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4">加拿大加密货币交易</h2>
+                <p class="text-neutral text-lg max-w-2xl mx-auto">合规交易平台推荐、加密货币税务申报指南、加拿大监管政策解读</p>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-10 items-center">
+                <div class="md:w-1/2">
+                    <img src="https://picsum.photos/600/400" alt="加拿大加密货币交易场景" class="rounded-xl shadow-lg w-full object-cover" />
+                </div>
+                <div class="md:w-1/2 space-y-6">
+                    <div class="flex items-start gap-4">
+                        <div class="bg-primary/10 rounded-full p-3 text-primary">
+                            <i class="fa fa-exchange text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2">合规交易平台</h3>
+                            <p class="text-neutral">推荐加拿大本土持牌加密货币平台（如Coinberry、Newton），符合FINTRAC监管要求，资金更安全</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="bg-primary/10 rounded-full p-3 text-primary">
+                            <i class="fa fa-tax text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2">加密货币税务申报</h3>
+                            <p class="text-neutral">加拿大税务局(CRA)将加密货币视为商品，交易收益需申报资本利得，提供完整税务计算工具</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="bg-primary/10 rounded-full p-3 text-primary">
+                            <i class="fa fa-wallet text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2">安全存储方案</h3>
+                            <p class="text-neutral">冷钱包/热钱包选择指南，针对加拿大用户的存储安全建议，避免资产丢失或被盗</p>
+                        </div>
+                    </div>
+
+                    <a href="#" class="inline-block bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors font-medium">
+                        查看加密货币完整指南 <i class="fa fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 投资工具模块 -->
+    <section id="tools" class="py-16 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4">投资工具与资源</h2>
+                <p class="text-neutral text-lg max-w-2xl mx-auto">专为加拿大投资者打造的实用工具，助力投资决策与资产管理</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- 工具1 -->
+                <div class="bg-gray-50 rounded-xl p-6 shadow-sm card-hover text-center">
+                    <div class="bg-primary/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                        <i class="fa fa-calculator text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">TFSA/RRSP 计算器</h3>
+                    <p class="text-neutral text-sm">计算年度供款限额与长期投资收益</p>
+                </div>
+
+                <!-- 工具2 -->
+                <div class="bg-gray-50 rounded-xl p-6 shadow-sm card-hover text-center">
+                    <div class="bg-primary/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                        <i class="fa fa-line-chart text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">股票行情追踪</h3>
+                    <p class="text-neutral text-sm">TSX/TSXV 实时行情与历史数据查询</p>
+                </div>
+
+                <!-- 工具3 -->
+                <div class="bg-gray-50 rounded-xl p-6 shadow-sm card-hover text-center">
+                    <div class="bg-primary/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                        <i class="fa fa-bitcoin text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">加密货币转换工具</h3>
+                    <p class="text-neutral text-sm">加元与主流加密货币实时汇率转换</p>
+                </div>
+
+                <!-- 工具4 -->
+                <div class="bg-gray-50 rounded-xl p-6 shadow-sm card-hover text-center">
+                    <div class="bg-primary/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                        <i class="fa fa-file-text-o text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">税务申报模板</h3>
+                    <p class="text-neutral text-sm">符合CRA要求的投资收益申报模板</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 加拿大税务模块 -->
+    <section id="tax" class="py-16 bg-gradient-to-br from-canadian/5 to-primary/5">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4">加拿大投资税务指南</h2>
+                <p class="text-neutral text-lg max-w-2xl mx-auto">了解CRA税务规则，优化投资税负，避免税务风险</p>
+            </div>
+
+            <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-8">
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                            <i class="fa fa-circle text-xs text-primary"></i>
+                            股票投资税务
+                        </h3>
+                        <p class="text-neutral pl-6">通过非注册账户投资股票，卖出收益需申报50%的资本利得；TFSA账户内收益免税，RRSP账户取款时按个人所得税率征税。</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                            <i class="fa fa-circle text-xs text-primary"></i>
+                            加密货币税务
+                        </h3>
+                        <p class="text-neutral pl-6">CRA规定，加密货币交易、挖矿、质押收益均需申报，交易收益按资本利得处理，挖矿/质押收益按经营所得处理。</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                            <i class="fa fa-circle text-xs text-primary"></i>
+                            年度申报截止日期
+                        </h3>
+                        <p class="text-neutral pl-6">个人税务申报截止日期为每年4月30日，自雇人士截止日期为6月15日，所欠税款需在4月30日前缴纳。</p>
+                    </div>
+
+                    <div class="pt-4">
+                        <a href="#" class="inline-block bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors font-medium">
+                            下载完整税务指南 <i class="fa fa-download ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 底部CTA -->
+    <section class="py-12 bg-primary text-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+                <div class="text-center md:text-left">
+                    <h2 class="text-2xl md:text-3xl font-bold mb-2">开启你的加拿大投资之旅</h2>
+                    <p class="text-white/80">注册即可获取免费投资工具与专属税务指南</p>
+                </div>
+                <div>
+                    <a href="#" class="bg-white text-primary px-8 py-3 rounded-lg hover:bg-gray-100 transition-colors font-medium">
+                        免费注册 <i class="fa fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-gray-400 py-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fa fa-line-chart text-primary text-2xl"></i>
+                        <span class="text-xl font-bold text-white">Canadian <span class="text-primary">Invest Hub</span></span>
+                    </div>
+                    <p class="mb-4">专为加拿大股票与加密货币投资者打造的一站式平台</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="hover:text-white transition-colors"><i class="fa fa-facebook"></i></a>
+                        <a href="#" class="hover:text-white transition-colors"><i class="fa fa-twitter"></i></a>
+                        <a href="#" class="hover:text-white transition-colors"><i class="fa fa-linkedin"></i></a>
+                        <a href="#" class="hover:text-white transition-colors"><i class="fa fa-telegram"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-white font-semibold mb-4">快速链接</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#stocks" class="hover:text-white transition-colors">加拿大股票</a></li>
+                        <li><a href="#crypto" class="hover:text-white transition-colors">加密货币</a></li>
+                        <li><a href="#tools" class="hover:text-white transition-colors">投资工具</a></li>
+                        <li><a href="#tax" class="hover:text-white transition-colors">加拿大税务</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-white font-semibold mb-4">平台资源</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white transition-colors">投资教程</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">市场分析</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">常见问题</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">联系我们</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-white font-semibold mb-4">法律声明</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white transition-colors">服务条款</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">隐私政策</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">免责声明</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">CRA合规指南</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+                <p>© 2026 Canadian Invest Hub. 仅供教育参考，不构成投资建议。投资有风险，入市需谨慎。</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript 交互逻辑 -->
+    <script>
+        // 移动端菜单切换
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+
+                    // 移动端菜单自动关闭
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+
+        // 市场趋势图表
+        window.addEventListener('load', function() {
+            const ctx = document.getElementById('marketChart').getContext('2d');
+            const marketChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['1月', '2月', '3月', '4月', '5月', '6月', '7月'],
+                    datasets: [
+                        {
+                            label: 'TSX 指数',
+                            data: [20500, 20800, 20200, 21000, 21500, 21800, 22200],
+                            borderColor: '#165DFF',
+                            backgroundColor: 'rgba(22, 93, 255, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: '加密货币综合指数 (CAD)',
+                            data: [850, 920, 780, 890, 950, 1020, 1100],
+                            borderColor: '#E81C27',
+                            backgroundColor: 'rgba(232, 28, 39, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            grid: {
+                                drawBorder: false,
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
